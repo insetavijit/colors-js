@@ -1,5 +1,5 @@
 describe("colorJs - public variable chaking", function () {
-    // jasmine.getFixtures().fixturesPath = 'base/test/fixture';
+    
     it("is the root id same ad - #cJ_root_container - ", function () {
         // loadFixtures('index.html')
         var cJ = new colorJs();
@@ -8,7 +8,7 @@ describe("colorJs - public variable chaking", function () {
     it("is the base box id same ad - #cJ_root_container - ", function () {
         // loadFixtures('index.html')
         var cJ = new colorJs();
-        expect(cJ.baseBoxId).toEqual('cJ_Base_container');
+        expect(cJ.palette).toEqual('cJ_pallet');
     });
 });
 
