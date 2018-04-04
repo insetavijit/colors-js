@@ -21,7 +21,12 @@ module.exports = function(config) {
     files: [
       "node_modules/jquery/dist/jquery.min.js",
       'src/**.js',
-      'test/**/*.js'
+      'test/**/*.js',
+      { 
+        pattern: 'test/fixture/*.html', 
+        included: false, 
+        served: true 
+      }
     ],
 
 
