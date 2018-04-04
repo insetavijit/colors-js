@@ -2,22 +2,27 @@ class colorJs {
     public rootElement;
     public rootElemnentID;
     public BaseBox;
-    public palette;
+    public paletteID;
     public styleAttr;
     // public styleString;
     public colors;
     constructor(parameters) {
         this.rootElemnentID = 'cJ_root_container';
-        this.palette = 'cJ_pallet';
+        this.paletteID = 'cJ_pallet';
         this.styleAttr = 'data-cJ-style';
         // this.SetStyleSting();
+        
     }
     public register(){
         // if no seed createted then only create one
+        
+        this.rootElement = this.getRootElem();
+        
         if (this.getRootElem() === null){
             this.setColors();
             this.dropStyle();
             this.dropTheSeed();
+            this.rootElement = this.getRootElem();            
         }
         // before we get rootItem we need to inisialise dropTheSeed . for this above code is written
         
@@ -41,7 +46,7 @@ class colorJs {
          * @description set the root element in object 
          */
         var rootElem = document.getElementById(this.rootElemnentID);
-        this.rootElement = rootElem;
+        // this.rootElement = rootElem;
 
         return rootElem;
     }
@@ -59,26 +64,74 @@ class colorJs {
         return this;
     }
     public dropNavigationToRoot(){
-        var naviGationBar = document.createElement('samp');
-        var naviGationBarChilds = '<span>x</span><span>y</span><span>z</span>';
+        var naviGationBar = document.createElement('header');
+        var naviGationBarChilds 
+                ='<samp>'
+                        +'<span>&times;</span>'
+                        +'<span data-cj-toggle-right="true" style="right:0">&lsaquo; - &rsaquo;</span>'
+                    +'</samp>';
         
         naviGationBar.innerHTML = naviGationBarChilds;
+        // naviGationBar.innerHTML = '<h1> fuck </h1>';
         this.rootElement.appendChild(naviGationBar);
+        // return this;
     }
     public SetStyleSting (){
         /**
          * @description includes style sting in the var StyleStings so we can use it leater
          */
-        return '#' + this.palette +' {border-radius:4px;box-shadow:0 4px 10px -3px #263238;overflow:hidden}'
-            + '#' + this.rootElemnentID +' {position:fixed;bottom:0;width:350px}'
-            + '#' + this.rootElemnentID +' span{padding:0 10px;cursor:pointer;border-left:1px solid #d7ccc8}'
-            + '#' + this.rootElemnentID +' span:first-child{border:none}'
-            + '#' + this.rootElemnentID +' samp{background:#fce4ec;border-radius:6px;cursor:pointer}'
-            + '#' + this.rootElemnentID +' header{transition:cubic-bezier(.895,.03,.685,.22)}';
+        return    '#' + this.paletteID +' {border-radius:4px;box-shadow:0 4px 10px -3px #263238;overflow:hidden;}'
+                + '#' + this.rootElemnentID +' {position:fixed;bottom:0;width:350px;}'
+                + '#' + this.rootElemnentID +' span{padding:0 10px;cursor:pointer;border-left:1px solid #d7ccc8;}'
+                + '#' + this.rootElemnentID +' span:first-child{border:none;}'
+                + '#' + this.rootElemnentID +' samp{background:#fce4ec;border-radius:6px;cursor:pointer;}'
+                + '#' + this.rootElemnentID +' header{transition:cubic-bezier(.895,.03,.685,.22);}'
+                + '#' + this.paletteID +' .cJRow{display: flex;}'
+            + '#' + this.paletteID + ' .cJRow .cJCell{min-height: 1.5em; flex: 1;}';
+        // return 'body{background:#cccccc}'
         
     }
+    public getNavigationElem() {
+        var root = this.getRootElem();
+        return root.firstChild;
+    }
+    public createColorPattel(){
+        var colorPalett = document.createElement('div');
+        colorPalett.setAttribute('id' , this.paletteID );
+        colorPalett.innerHTML = this.createCellColors();
+        // this.rootElement.appendChild(colorPalett);
+        // this.getNavigationElem().parentNode.insertBefore(colorPalett, this.getNavigationElem().nextSibling
+        return this.appedAfter( this.getNavigationElem () , colorPalett );
+    }
+    public appedAfter(elem :Node  , appenThis : Node ){
+        elem.parentNode.insertBefore( appenThis , elem.nextSibling )
+    }
+    public setFooterText(){
+        var footer = document.createElement('footer');
+        footer.innerHTML = '<p> do it faster ! </p>'
+        this.appedAfter( this.getRootElem().lastChild , footer );
+        
+    }
+    public createCellColors() {
+        /**
+         * @description support instance for this.createColorPattel
+         */
+        var colorList = this.setColors();
+        var htmlStringCollect = '';
+        colorList.forEach(colorMain => {
+            var htmlString = "<div class='cJRow'>";
+            var cos = Object.keys(colorMain);
+            cos.forEach(color => {
+                htmlString += "<div class='cJCell' data-name='" + color + "' style='background: " + colorMain[color] + "'></div>";
+            });
+
+            htmlString += "</div>";
+            htmlStringCollect += htmlString;
+        });
+        return htmlStringCollect;
+    }
     public setColors() {
-        this.colors =
+        return this.colors =
             [
                 {
                     "red-5": "#ffebee",
@@ -375,6 +428,6 @@ class colorJs {
                 }
             ];
     }
-
+    
 }
 
