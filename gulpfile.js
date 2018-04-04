@@ -56,7 +56,7 @@ gulp.task('sft:map', gulp.series((done) => {
         gulp.src([
             dir.bin + '/js/**.map'
         ])
-        .pipe(gulp.dest(dir.dist + '/libs/js'));
+        .pipe(gulp.dest(dir.dist));
         done();
 }))
 
@@ -83,11 +83,11 @@ gulp.task('js' , gulp.series('tsc'  , 'sft:map', (done)=>{
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(rename({ basename: 'myscript' }))
-        .pipe(gulp.dest(dir.dist + '/libs/js')) // save .js
+        .pipe(gulp.dest(dir.dist)) // save .js
         .pipe(uglify())
         .pipe(rename({ extname: '.min.js' }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(dir.dist + '/libs/js'))
+        .pipe(gulp.dest(dir.dist))
     done();
 }))
 /**
@@ -103,5 +103,5 @@ gulp.task('js:w' , gulp.parallel('js' , (done)=>{
     gulp.watch(dir.ts, gulp.parallel('js'))
     done();
 }));
-gulp.task('all', gulp.series('js'));
-gulp.task('all:w', gulp.series('js:w'));
+gulp.task('all', gulp.series('clear', 'js'));
+gulp.task('all:w', gulp.series( 'clear','js:w'));
