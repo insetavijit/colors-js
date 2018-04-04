@@ -20,13 +20,6 @@
   },
   "homepage": "https://github.com/insetavijit/open-seed-js#readme",
   "devDependencies": {
-    "jasmine": "^3.1.0",
-    "jasmine-jquery": "^2.1.1",
-    "jquery": "^3.3.1",
-    "karma": "^2.0.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.1",
-    "karma-jasmine-jquery": "^0.1.1",
     "ansi-colors": "^1.1.0",
     "copy": "^0.3.1",
     "del": "^3.0.0",
@@ -37,6 +30,14 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-typescript": "^4.0.2",
     "gulp-uglify": "^3.0.0",
+    "jasmine": "^3.1.0",
+    "jasmine-jquery": "^2.1.1",
+    "jquery": "^3.3.1",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-sourcemap-loader": "^0.3.7",
     "merge2": "^1.2.1",
     "typescript": "^2.9.0-dev.20180402"
   }

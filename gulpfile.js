@@ -82,7 +82,6 @@ gulp.task('js' , gulp.series('tsc'  , 'sft:map', (done)=>{
     gulp.src(dir.bin + '/js/**.js')
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        .pipe(rename({ basename: 'myscript' }))
         .pipe(gulp.dest(dir.dist)) // save .js
         .pipe(uglify())
         .pipe(rename({ extname: '.min.js' }))
