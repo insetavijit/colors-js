@@ -9,9 +9,7 @@ describe("test - tesing", function () {
     
     expect($('#grid').text()).toEqual('ok');
   });
-  it("can we connect to our scripts ?", function() {
-    expect(sayHi()).toEqual('hi');
-  });
+  
   it("Can we Load the Fixture file ?", function() {
     loadFixtures('index.html')
     expect($('#cJ-root').text()).toEqual('hi');
