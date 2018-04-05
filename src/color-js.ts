@@ -1,136 +1,219 @@
+
+// document.querySelector('a').oncClick();
+
+// document.querySelector('').addEventListener('click' , ()=>{
+    
+// });
+// document.getElementById('').addEventListener('click' , ()=>{
+    
+// });
+// document.getElementsByTagName('').addEventListener('click' , ()=>{
+    
+// });
+
+
 class colorJs {
-    public rootElement;
-    public rootElemnentID;
-    public BaseBox;
-    public paletteID;
-    public styleAttr;
+    public rootElement : HTMLElement ;
+    public rootElemnentID : string ;
+    public paletteID :string ;
+    public styleAttr : string ;
+    public name : string ;
+    public NaviGationIdentifiyer : string;
+    public NaviGatonBarToggelSwitch:HTMLElement;
+    public NaviGationBar : HTMLElement ;
     // public styleString;
     public colors;
     constructor(parameters) {
         this.rootElemnentID = 'cJ_root_container';
         this.paletteID = 'cJ_pallet';
         this.styleAttr = 'data-cJ-style';
-        // this.SetStyleSting();
+        this.name = 'color-js';
+        this.NaviGationIdentifiyer = 'data-cj-toggle-right';
         
     }
-    public register(){
-        // if no seed createted then only create one
+    public init(){
         
-        this.rootElement = this.getRootElem();
-        
-        if (this.getRootElem() === null){
-            this.setColors();
-            this.dropStyle();
-            this.dropTheSeed();
-            this.rootElement = this.getRootElem();            
+        //chaking if the root element created
+        if (this.getRootElem() === null )
+        {
+            this.createStyleSheet();            
+            
+            this.createRootElemet();
+            
         }
-        // before we get rootItem we need to inisialise dropTheSeed . for this above code is written
         
         return this;
     }
-    private dropTheSeed() {
+    public createRootElemet() {
         /**
-         * @description create a rootChild in dom so we can manupulate it as we want
+         * @description create a rootChild - this is our canvas 
          * @returns htmlNode of root
          */
-        //1. create the seed htmlNode
+        
         var seed = document.createElement('div');
-        seed.setAttribute("id", this.rootElemnentID);
-        // 3. putting the htmlNode to body
-        document.body.appendChild(seed);
-        //4. return the seed
-        return seed;
+
+            seed.setAttribute("id", this.rootElemnentID);
+
+            seed.appendChild(this.createNavigationBar());
+            seed.appendChild ( this.createColorPattel());
+            seed.appendChild(this.createFooterMsg());
+
+            document.body.appendChild(seed);
+        
+        return this;
     }
     private getRootElem() {
         /**
          * @description set the root element in object 
          */
-        var rootElem = document.getElementById(this.rootElemnentID);
-        // this.rootElement = rootElem;
 
-        return rootElem;
+        var rootElem : HTMLElement = document.querySelector("#"  + this.rootElemnentID );
+        // var rootElem = document.getElementById(this.rootElemnentID);
+
+        return this.rootElement = rootElem;
     }
-    public dropStyle() {
+    public createStyleSheet() {
         var style = document.createElement('style');
 
-        style.setAttribute('data-cJ-style', 'cJ')
-        style.type = 'text/css';
+            style.setAttribute('data-cJ-style', 'cJ');
 
-        var cssNode = document.createTextNode(this.SetStyleSting());
+            style.type = 'text/css';
+
+        var cssNode = document.createTextNode(this.CreteStyleString());
         style.appendChild(cssNode);
 
         //putting the style in dom
         document.head.appendChild(style);
         return this;
     }
-    public dropNavigationToRoot(){
+    public CreteStyleString() {
+        /**
+         * @description Create the styleSheet as sting to an pass it
+         * @returns string : the styleString
+         */
+        var styleString =
+             '#' + this.paletteID + ' {border-radius:4px;box-shadow:0 4px 10px -3px #263238;overflow:hidden;}'
+            + '#' + this.rootElemnentID + ' {position:fixed;bottom:0;width:350px;}'
+            + '#' + this.rootElemnentID + ' span{padding:0 10px;cursor:pointer;border-left:1px solid #d7ccc8;}'
+            + '#' + this.rootElemnentID + ' span:first-child{border:none;}'
+            + '#' + this.rootElemnentID + ' samp{background:#fce4ec;border-radius:6px;cursor:pointer;}'
+            + '#' + this.rootElemnentID + ' header{transition:cubic-bezier(.895,.03,.685,.22);}'
+            + '#' + this.paletteID + ' .cJRow{display: flex;}'
+            + '#' + this.paletteID + ' .cJRow .cJCell{min-height: 1.5em; flex: 1;}';
+
+        return styleString ;
+    }
+    public getNavStatus( change : string = 'df' ) {
+        // var tarGet  = this.getRootElem().firstChild.firstChild.lastChild;
+        this.getnaviGationBar();
+        var tarGet = this.NaviGationBar.querySelector('samp')
+        this.NaviGatonBarToggelSwitch = this.NaviGationBar.querySelector('['+ this.NaviGationIdentifiyer +']') ;
+
+        if(change === 'right'){
+            this.NaviGatonBarToggelSwitch.setAttribute( this.NaviGationIdentifiyer , 'true' );
+            this.rootElement.style.right = '0px' ;
+            this.rootElement.style.left = 'auto' ;
+            return 'right';
+        }else if(change === 'left'){
+            this.NaviGatonBarToggelSwitch.setAttribute(this.NaviGationIdentifiyer, 'false');
+            this.rootElement.style.left = '0px';
+            this.rootElement.style.right = 'auto';
+            
+            return 'left';
+        }
+
+        var stat = this.NaviGatonBarToggelSwitch.getAttribute(this.NaviGationIdentifiyer);
+        
+        if (stat === 'false') {
+            return 'left';
+        } else {
+            return 'right';
+        }
+
+    }
+    public toggleNavigationBarSide(){
+        /**
+         * @description toggle navigation bar side
+         * move right - move left
+         */
+        var navBarStatus = this.getNavStatus();
+        if(navBarStatus === 'right'){
+            return this.getNavStatus('left')
+        }else if (navBarStatus === 'left'){
+            return this.getNavStatus('right')
+        }
+        return this;
+    }
+    public createNavigationBar(){
         var naviGationBar = document.createElement('header');
         var naviGationBarChilds 
-                ='<samp>'
-                        +'<span>&times;</span>'
-                        +'<span data-cj-toggle-right="true" style="right:0">&lsaquo; - &rsaquo;</span>'
+                =   '<samp>'
+                        +'<span data-cJ-toggel="false">&times;</span>'
+                        +'<span onclick="new colorJs().init().toggleNavigationBarSide()" '+ this.NaviGationIdentifiyer +'="false" style="">&lsaquo; - &rsaquo;</span>'
                     +'</samp>';
         
         naviGationBar.innerHTML = naviGationBarChilds;
-        // naviGationBar.innerHTML = '<h1> fuck </h1>';
-        this.rootElement.appendChild(naviGationBar);
-        // return this;
-    }
-    public SetStyleSting (){
-        /**
-         * @description includes style sting in the var StyleStings so we can use it leater
-         */
-        return    '#' + this.paletteID +' {border-radius:4px;box-shadow:0 4px 10px -3px #263238;overflow:hidden;}'
-                + '#' + this.rootElemnentID +' {position:fixed;bottom:0;width:350px;}'
-                + '#' + this.rootElemnentID +' span{padding:0 10px;cursor:pointer;border-left:1px solid #d7ccc8;}'
-                + '#' + this.rootElemnentID +' span:first-child{border:none;}'
-                + '#' + this.rootElemnentID +' samp{background:#fce4ec;border-radius:6px;cursor:pointer;}'
-                + '#' + this.rootElemnentID +' header{transition:cubic-bezier(.895,.03,.685,.22);}'
-                + '#' + this.paletteID +' .cJRow{display: flex;}'
-            + '#' + this.paletteID + ' .cJRow .cJCell{min-height: 1.5em; flex: 1;}';
-        // return 'body{background:#cccccc}'
         
+        // this.rootElement.appendChild(naviGationBar);
+
+        return naviGationBar;
     }
-    public getNavigationElem() {
+    public getnaviGationBar() {
         var root = this.getRootElem();
-        return root.firstChild;
+        this.NaviGationBar =  root.querySelector('header');
+        return this;
     }
     public createColorPattel(){
         var colorPalett = document.createElement('div');
-        colorPalett.setAttribute('id' , this.paletteID );
-        colorPalett.innerHTML = this.createCellColors();
-        // this.rootElement.appendChild(colorPalett);
-        // this.getNavigationElem().parentNode.insertBefore(colorPalett, this.getNavigationElem().nextSibling
-        return this.appedAfter( this.getNavigationElem () , colorPalett );
+
+            colorPalett.setAttribute('id' , this.paletteID );
+
+            colorPalett.innerHTML = this.createColorCells();
+                
+        return colorPalett;
     }
-    public appedAfter(elem :Node  , appenThis : Node ){
-        elem.parentNode.insertBefore( appenThis , elem.nextSibling )
-    }
-    public setFooterText(){
-        var footer = document.createElement('footer');
-        footer.innerHTML = '<p> do it faster ! </p>'
-        this.appedAfter( this.getRootElem().lastChild , footer );
-        
-    }
-    public createCellColors() {
+    public createColorCells() {
         /**
-         * @description support instance for this.createColorPattel
+         * @description create the color pattel rows and cells 
+         * @returns sting : colorPattel format
          */
         var colorList = this.setColors();
+
         var htmlStringCollect = '';
-        colorList.forEach(colorMain => {
+        
+        colorList.forEach ( parentColor => {
             var htmlString = "<div class='cJRow'>";
-            var cos = Object.keys(colorMain);
-            cos.forEach(color => {
-                htmlString += "<div class='cJCell' data-name='" + color + "' style='background: " + colorMain[color] + "'></div>";
-            });
+            var cos = Object.keys(parentColor);
+
+                cos.forEach(color => {
+                    htmlString += "<div class='cJCell' data-name='" + color + "' style='background: " + parentColor[color] + "'></div>";
+                });
 
             htmlString += "</div>";
             htmlStringCollect += htmlString;
         });
+
         return htmlStringCollect;
     }
+    public createFooterMsg() {
+        var footer = document.createElement('footer');
+
+        footer.innerHTML = '<p> do it faster ! </p>'
+
+        return footer;
+
+    }
+    public appedAfter(elem: Node, appenThis: Node) {
+
+        elem.parentNode.insertBefore(appenThis, elem.nextSibling);
+
+        return this;
+    }
     public setColors() {
+        /**
+         * @description list of the colors
+         * @returns the color array [{..:..},{..:..}...]
+         */
         return this.colors =
             [
                 {
@@ -428,6 +511,5 @@ class colorJs {
                 }
             ];
     }
-    
 }
 
