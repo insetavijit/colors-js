@@ -7,9 +7,9 @@ class colorJs {
     public NaviGationIdentifiyer: string;
     public NaviGatonBarToggelSwitch: HTMLElement;
     public NaviGationBar: HTMLElement;
-    public closePattelBtn: HTMLElement;
-    public closePattelBtnIdentifier: string;
-    public showPattel : string;
+    public closePalletBtn: HTMLElement;
+    public closePalletBtnIdentifier: string;
+    public hidePallet : string;
     // public styleString;
     public colors;
     constructor(parameters) {
@@ -18,8 +18,8 @@ class colorJs {
         this.styleAttr = 'data-cJ-style';
         this.name = 'color-js';
         this.NaviGationIdentifiyer = 'data-cj-toggle-right';
-        this.closePattelBtnIdentifier = 'data-cJ-toggel-close';
-        this.showPattel = 'cJ-show-pattel';
+        this.closePalletBtnIdentifier = 'data-cJ-toggel-close';
+        this.hidePallet = 'cJ-hide-Pallet';
 
     }
     public init() {
@@ -45,7 +45,7 @@ class colorJs {
         seed.setAttribute("id", this.rootElemnentID);
         seed.setAttribute("data-cJ-toggel-show", 'true');
 
-        seed.appendChild(this.createColorPattel());
+        seed.appendChild(this.createColorPallet());
         seed.appendChild(this.createNavigationBar());
 
         document.body.appendChild(seed);
@@ -88,13 +88,14 @@ class colorJs {
             +   '#' + this.rootElemnentID + ' p span{color:red;font-size:20px;cursor:pointer}'
             +   '#' + this.rootElemnentID + ' p samp{float:left}'
             +   '#' + this.rootElemnentID + ' footer{opacity:0}'
-            +   '[' + this.showPattel+'= "true" ]'+'{opacity:1;-webkit-animation:fadein 1s;animation:fadein 1s}'
-            +   '[' + this.showPattel+'= "false" ]'+'{opacity:1;-webkit-animation:fadein 1s;animation:fadein 1s}'
-            +   '#' + this.rootElemnentID + ' footer:hover{opacity:1;-webkit-animation:fadeOut 1s;animation:fadeOut 1s}'
+            + '[' + this.hidePallet + '= "true" ]' +'{opacity:0;-webkit-animation:cJ-fadeOut 0.5s;animation:cJ-fadeOut 0.5s}'
+            + '[' + this.hidePallet + '= "false" ]' +'{opacity:1;-webkit-animation:cJ-fadein 0.5s;animation:cJ-fadein 0.5s}'
+            + '#' + this.rootElemnentID + ' footer:hover{opacity:1;-webkit-animation:cJ-fadein 0.5s;animation:cJ-fadein 0.5s}'
             +   '#' + this.palletID + ' .cJRow{display: flex;}'
-            +   '#' + this.palletID + ' .cJRow .cJCell{min-height: 1.5em; flex: 1;}';
-        +'@-webkit-keyframes cJ-fadeIn{from{opacity:0}to{opacity:1}}@keyframes cJ-fadeIn{from{opacity:0}to{opacity:1}}'
-            + '@-webkit-keyframes cJ-fadeOut{from{opacity:1}to{opacity:0}}@keyframes cJ-fadeOut{from{opacity:1}to{opacity:0}};'
+            +   '#' + this.palletID + ' .cJRow .cJCell{min-height: 1.5em; flex: 1;}'
+            +'@-webkit-keyframes cJ-fadeIn{from{opacity:0}to{opacity:1}}@keyframes cJ-fadeIn{from{opacity:0}to{opacity:1}}'
+                + '@-webkit-keyframes cJ-fadeOut{from{opacity:1}to{opacity:0}}@keyframes cJ-fadeOut{from{opacity:1}to{opacity:0}}'
+            ;
 
         return styleString;
     }
@@ -136,9 +137,9 @@ class colorJs {
         var naviGationBar = document.createElement('footer');
         var naviGationBarChilds
             = '<p>'
-            + '<samp > See it Live ! </samp>'            
-            + '<span onclick="new colorJs().init().toggleNavigationBarSide()" ' + this.NaviGationIdentifiyer + '="false" style="">&lsaquo; - &rsaquo;</span>'
-            + '<span ' + this.closePattelBtnIdentifier +'="false">&nbsp;| &times; &nbsp;</span>'
+            + '<samp > color-js | v1.0 </samp>'            
+            + '<span onclick="new colorJs().init().toggleNavigationBarSide()" ' + this.NaviGationIdentifiyer + '="false" style="">&nbsp;<a href="#">&lsaquo; - &rsaquo;</a></span>'
+            + '<span onclick="new colorJs().init().toggelPallet()"' + this.closePalletBtnIdentifier +'="false">&nbsp;<a href="#">&nbsp;&infin;&nbsp;</a></span>'
             + '</p>';
 
         naviGationBar.innerHTML = naviGationBarChilds;
@@ -150,17 +151,17 @@ class colorJs {
     public getCloseBtnStatus(){
         this.getnaviGationBar();
 
-        this.closePattelBtn = this.NaviGationBar.querySelector('[' + this.closePattelBtnIdentifier + ']');
-        var stat = this.closePattelBtn.getAttribute(this.closePattelBtnIdentifier);
+        this.closePalletBtn = this.NaviGationBar.querySelector('[' + this.closePalletBtnIdentifier + ']');
+        var stat = this.closePalletBtn.getAttribute(this.closePalletBtnIdentifier);
         return stat ;
     }
     public toggelPallet(){
         if( this.getCloseBtnStatus() === 'false' ){
-            this.closePattelBtn.setAttribute(this.closePattelBtnIdentifier , 'true');
-            this.rootElement.querySelector('#' + this.palletID).setAttribute(this.showPattel , 'false');
+            this.closePalletBtn.setAttribute(this.closePalletBtnIdentifier , 'true');
+            this.rootElement.querySelector('#' + this.palletID).setAttribute(this.hidePallet , 'true');
         } else if (this.getCloseBtnStatus() === 'true'){
-            this.closePattelBtn.setAttribute(this.closePattelBtnIdentifier, 'false');
-            this.rootElement.querySelector('#' + this.palletID).setAttribute(this.showPattel, 'true');
+            this.closePalletBtn.setAttribute(this.closePalletBtnIdentifier, 'false');
+            this.rootElement.querySelector('#' + this.palletID).setAttribute(this.hidePallet, 'false');
             
         }
         return this ; 
@@ -170,10 +171,11 @@ class colorJs {
         this.NaviGationBar = root.querySelector('footer');
         return this;
     }
-    public createColorPattel() {
+    public createColorPallet() {
         var colorPalett = document.createElement('div');
 
         colorPalett.setAttribute('id', this.palletID);
+        colorPalett.setAttribute(this.hidePallet , 'false');
 
         colorPalett.innerHTML = this.createColorCells();
 
@@ -181,8 +183,8 @@ class colorJs {
     }
     public createColorCells() {
         /**
-         * @description create the color pattel rows and cells 
-         * @returns sting : colorPattel format
+         * @description create the color Pallet rows and cells 
+         * @returns sting : colorPallet format
          */
         var colorList = this.setColors();
 

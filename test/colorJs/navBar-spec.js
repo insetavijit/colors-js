@@ -58,17 +58,28 @@ describe("[ cJ ] - naviGation bar ", function () {
         expect(domInNav.find('p').children().length).toBe(3);
         
     });
+
     it("Can we get status of close btn and change it ?", function () {
         var cJ = new colorJs().init();
         var domInNav = $( '#'+ cJ.rootElemnentID ).find('footer') ;
         
-        expect(domInNav.find('p').children().last().attr(cJ.closePattelBtnIdentifier)).toBe('false');
+        expect(domInNav.find('p').children().last().attr(cJ.closePalletBtnIdentifier)).toBe('false');
+        expect($('#' + cJ.palletID).attr(cJ.hidePallet)).toBe('false');        // expect($('#'  + cJ.palletID )).toBe('true');
 
         cJ.toggelPallet();
-        expect(domInNav.find('p').children().last().attr(cJ.closePattelBtnIdentifier)).toBe('true');
+        expect(domInNav.find('p').children().last().attr(cJ.closePalletBtnIdentifier)).toBe('true');
+        expect($('#'  + cJ.palletID ).attr(cJ.hidePallet)).toBe('true');
 
         cJ.toggelPallet();
-        expect(domInNav.find('p').children().last().attr(cJ.closePattelBtnIdentifier)).toBe('false');
+        expect(domInNav.find('p').children().last().attr(cJ.closePalletBtnIdentifier)).toBe('false');
+        expect($('#' + cJ.palletID).attr(cJ.hidePallet)).toBe('false');
         
+        cJ.toggelPallet();
+        expect(domInNav.find('p').children().last().attr(cJ.closePalletBtnIdentifier)).toBe('true');
+        expect($('#' + cJ.palletID).attr(cJ.hidePallet)).toBe('true');
+
+        cJ.toggelPallet();
+        expect(domInNav.find('p').children().last().attr(cJ.closePalletBtnIdentifier)).toBe('false');
+        expect($('#' + cJ.palletID).attr(cJ.hidePallet)).toBe('false');
     });
 });
