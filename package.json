@@ -1,7 +1,7 @@
 {
-  "name": "colors-js",
+  "name": "colors-pallet-js",
   "version": "1.0.0",
-  "description": "A simple Color Pallet right in your broser page  . to change and preview element colors . just include the sctipt in your page and done !",
+  "description": "( mdc - colors ) \n A simple Color Pallet right in your broser page  . to change and preview element colors . just include the sctipt in your page and done !",
   "main": "index.js",
   "directories": {
     "test": "karma start",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/insetavijit/colors-js.git"
+    "url": "git+https://github.com/insetavijit/colors-pallet-js.git"
   },
   "author": "inset.avijit",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/insetavijit/colors-js/issues"
+    "url": "https://github.com/insetavijit/colors-pallet-js/issues"
   },
-  "homepage": "https://github.com/insetavijit/colors-js#readme",
+  "homepage": "https://github.com/insetavijit/colors-pallet-js#readme",
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
     "@types/jquery": "^3.3.1",
@@ -42,6 +42,6 @@
     "karma-jasmine-jquery": "^0.1.1",
     "karma-sourcemap-loader": "^0.3.7",
     "merge2": "^1.2.1",
-    "typescript": "^2.9.0-dev.20180402"
+    "typescript": "^2.9.0-dev.20180406"
   }
 }
