@@ -5,3 +5,10 @@ node_modules
 dist
 
 typings
+
+
+#extra for npm packages :################
+
+#gulpfile.js
+#src/**
+#!dist

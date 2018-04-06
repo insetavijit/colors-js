@@ -1,6 +1,6 @@
 {
   "name": "colors-pallet-js",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "( mdc - colors ) \n A simple Color Pallet right in your broser page  . to change and preview element colors . just include the sctipt in your page and done !",
   "main": "index.js",
   "directories": {
