@@ -1,47 +1,37 @@
-
-// document.querySelector('a').oncClick();
-
-// document.querySelector('').addEventListener('click' , ()=>{
-    
-// });
-// document.getElementById('').addEventListener('click' , ()=>{
-    
-// });
-// document.getElementsByTagName('').addEventListener('click' , ()=>{
-    
-// });
-
-
 class colorJs {
-    public rootElement : HTMLElement ;
-    public rootElemnentID : string ;
-    public paletteID :string ;
-    public styleAttr : string ;
-    public name : string ;
-    public NaviGationIdentifiyer : string;
-    public NaviGatonBarToggelSwitch:HTMLElement;
-    public NaviGationBar : HTMLElement ;
+    public rootElement: HTMLElement;
+    public rootElemnentID: string;
+    public palletID: string;
+    public styleAttr: string;
+    public name: string;
+    public NaviGationIdentifiyer: string;
+    public NaviGatonBarToggelSwitch: HTMLElement;
+    public NaviGationBar: HTMLElement;
+    public closePattelBtn: HTMLElement;
+    public closePattelBtnIdentifier: string;
+    public showPattel : string;
     // public styleString;
     public colors;
     constructor(parameters) {
         this.rootElemnentID = 'cJ_root_container';
-        this.paletteID = 'cJ_pallet';
+        this.palletID = 'cJ_pallet';
         this.styleAttr = 'data-cJ-style';
         this.name = 'color-js';
         this.NaviGationIdentifiyer = 'data-cj-toggle-right';
-        
+        this.closePattelBtnIdentifier = 'data-cJ-toggel-close';
+        this.showPattel = 'cJ-show-pattel';
+
     }
-    public init(){
-        
+    public init() {
+
         //chaking if the root element created
-        if (this.getRootElem() === null )
-        {
-            this.createStyleSheet();            
-            
+        if (this.getRootElem() === null) {
+            this.createStyleSheet();
+
             this.createRootElemet();
-            
+
         }
-        
+
         return this;
     }
     public createRootElemet() {
@@ -49,17 +39,17 @@ class colorJs {
          * @description create a rootChild - this is our canvas 
          * @returns htmlNode of root
          */
-        
+
         var seed = document.createElement('div');
 
-            seed.setAttribute("id", this.rootElemnentID);
+        seed.setAttribute("id", this.rootElemnentID);
+        seed.setAttribute("data-cJ-toggel-show", 'true');
 
-            seed.appendChild(this.createNavigationBar());
-            seed.appendChild ( this.createColorPattel());
-            seed.appendChild(this.createFooterMsg());
+        seed.appendChild(this.createColorPattel());
+        seed.appendChild(this.createNavigationBar());
 
-            document.body.appendChild(seed);
-        
+        document.body.appendChild(seed);
+
         return this;
     }
     private getRootElem() {
@@ -67,7 +57,7 @@ class colorJs {
          * @description set the root element in object 
          */
 
-        var rootElem : HTMLElement = document.querySelector("#"  + this.rootElemnentID );
+        var rootElem: HTMLElement = document.querySelector("#" + this.rootElemnentID);
         // var rootElem = document.getElementById(this.rootElemnentID);
 
         return this.rootElement = rootElem;
@@ -75,9 +65,9 @@ class colorJs {
     public createStyleSheet() {
         var style = document.createElement('style');
 
-            style.setAttribute('data-cJ-style', 'cJ');
+        style.setAttribute('data-cJ-style', 'cJ');
 
-            style.type = 'text/css';
+        style.type = 'text/css';
 
         var cssNode = document.createTextNode(this.CreteStyleString());
         style.appendChild(cssNode);
@@ -92,38 +82,29 @@ class colorJs {
          * @returns string : the styleString
          */
         var styleString =
-             '#' + this.paletteID + ' {border-radius:4px;box-shadow:0 4px 10px -3px #263238;overflow:hidden;}'
-            + '#' + this.rootElemnentID + ' {position:fixed;bottom:0;width:350px;}'
-            + '#' + this.rootElemnentID + ' span{padding:0 10px;cursor:pointer;border-left:1px solid #d7ccc8;}'
-            + '#' + this.rootElemnentID + ' span:first-child{border:none;}'
-            + '#' + this.rootElemnentID + ' samp{background:#fce4ec;border-radius:6px;cursor:pointer;}'
-            + '#' + this.rootElemnentID + ' header{transition:cubic-bezier(.895,.03,.685,.22);}'
-            + '#' + this.paletteID + ' .cJRow{display: flex;}'
-            + '#' + this.paletteID + ' .cJRow .cJCell{min-height: 1.5em; flex: 1;}';
+                '#' + this.palletID +  ' {border-radius:4px;box-shadow:0 4px 10px -3px #263238;overflow:hidden}'
+            +   '#' + this.rootElemnentID + ' {position:fixed;bottom:0;width:350px}'
+            +   '#' + this.rootElemnentID + ' p{background:#ffccbc;border:solid 1px #ffab91;font-size:16px;text-align:right;padding:5px}'
+            +   '#' + this.rootElemnentID + ' p span{color:red;font-size:20px;cursor:pointer}'
+            +   '#' + this.rootElemnentID + ' p samp{float:left}'
+            +   '#' + this.rootElemnentID + ' footer{opacity:0}'
+            +   '[' + this.showPattel+'= "true" ]'+'{opacity:1;-webkit-animation:fadein 1s;animation:fadein 1s}'
+            +   '[' + this.showPattel+'= "false" ]'+'{opacity:1;-webkit-animation:fadein 1s;animation:fadein 1s}'
+            +   '#' + this.rootElemnentID + ' footer:hover{opacity:1;-webkit-animation:fadeOut 1s;animation:fadeOut 1s}'
+            +   '#' + this.palletID + ' .cJRow{display: flex;}'
+            +   '#' + this.palletID + ' .cJRow .cJCell{min-height: 1.5em; flex: 1;}';
+        +'@-webkit-keyframes cJ-fadeIn{from{opacity:0}to{opacity:1}}@keyframes cJ-fadeIn{from{opacity:0}to{opacity:1}}'
+            + '@-webkit-keyframes cJ-fadeOut{from{opacity:1}to{opacity:0}}@keyframes cJ-fadeOut{from{opacity:1}to{opacity:0}};'
 
-        return styleString ;
+        return styleString;
     }
-    public getNavStatus( change : string = 'df' ) {
-        // var tarGet  = this.getRootElem().firstChild.firstChild.lastChild;
-        this.getnaviGationBar();
-        var tarGet = this.NaviGationBar.querySelector('samp')
-        this.NaviGatonBarToggelSwitch = this.NaviGationBar.querySelector('['+ this.NaviGationIdentifiyer +']') ;
-
-        if(change === 'right'){
-            this.NaviGatonBarToggelSwitch.setAttribute( this.NaviGationIdentifiyer , 'true' );
-            this.rootElement.style.right = '0px' ;
-            this.rootElement.style.left = 'auto' ;
-            return 'right';
-        }else if(change === 'left'){
-            this.NaviGatonBarToggelSwitch.setAttribute(this.NaviGationIdentifiyer, 'false');
-            this.rootElement.style.left = '0px';
-            this.rootElement.style.right = 'auto';
-            
-            return 'left';
-        }
-
-        var stat = this.NaviGatonBarToggelSwitch.getAttribute(this.NaviGationIdentifiyer);
+    public getNavStatus(change: string = 'df') {
         
+        this.getnaviGationBar();
+        
+        this.NaviGatonBarToggelSwitch = this.NaviGationBar.querySelector('[' + this.NaviGationIdentifiyer + ']');
+        var stat = this.NaviGatonBarToggelSwitch.getAttribute(this.NaviGationIdentifiyer);
+
         if (stat === 'false') {
             return 'left';
         } else {
@@ -131,45 +112,71 @@ class colorJs {
         }
 
     }
-    public toggleNavigationBarSide(){
+    public toggleNavigationBarSide() {
         /**
          * @description toggle navigation bar side
          * move right - move left
          */
         var navBarStatus = this.getNavStatus();
-        if(navBarStatus === 'right'){
-            return this.getNavStatus('left')
-        }else if (navBarStatus === 'left'){
-            return this.getNavStatus('right')
+        if (navBarStatus === 'right') {
+            this.NaviGatonBarToggelSwitch.setAttribute(this.NaviGationIdentifiyer, 'false');
+            this.rootElement.style.left = '0px';
+            this.rootElement.style.right = 'auto';
+            return 'left';
+        } else if (navBarStatus === 'left') {
+            this.NaviGatonBarToggelSwitch.setAttribute(this.NaviGationIdentifiyer, 'true');
+            this.rootElement.style.right = '0px';
+            this.rootElement.style.left = 'auto';
+
+            return 'right';
         }
         return this;
     }
-    public createNavigationBar(){
-        var naviGationBar = document.createElement('header');
-        var naviGationBarChilds 
-                =   '<samp>'
-                        +'<span data-cJ-toggel="false">&times;</span>'
-                        +'<span onclick="new colorJs().init().toggleNavigationBarSide()" '+ this.NaviGationIdentifiyer +'="false" style="">&lsaquo; - &rsaquo;</span>'
-                    +'</samp>';
-        
+    public createNavigationBar() {
+        var naviGationBar = document.createElement('footer');
+        var naviGationBarChilds
+            = '<p>'
+            + '<samp > See it Live ! </samp>'            
+            + '<span onclick="new colorJs().init().toggleNavigationBarSide()" ' + this.NaviGationIdentifiyer + '="false" style="">&lsaquo; - &rsaquo;</span>'
+            + '<span ' + this.closePattelBtnIdentifier +'="false">&nbsp;| &times; &nbsp;</span>'
+            + '</p>';
+
         naviGationBar.innerHTML = naviGationBarChilds;
-        
+
         // this.rootElement.appendChild(naviGationBar);
 
         return naviGationBar;
     }
+    public getCloseBtnStatus(){
+        this.getnaviGationBar();
+
+        this.closePattelBtn = this.NaviGationBar.querySelector('[' + this.closePattelBtnIdentifier + ']');
+        var stat = this.closePattelBtn.getAttribute(this.closePattelBtnIdentifier);
+        return stat ;
+    }
+    public toggelPallet(){
+        if( this.getCloseBtnStatus() === 'false' ){
+            this.closePattelBtn.setAttribute(this.closePattelBtnIdentifier , 'true');
+            this.rootElement.querySelector('#' + this.palletID).setAttribute(this.showPattel , 'false');
+        } else if (this.getCloseBtnStatus() === 'true'){
+            this.closePattelBtn.setAttribute(this.closePattelBtnIdentifier, 'false');
+            this.rootElement.querySelector('#' + this.palletID).setAttribute(this.showPattel, 'true');
+            
+        }
+        return this ; 
+    }
     public getnaviGationBar() {
         var root = this.getRootElem();
-        this.NaviGationBar =  root.querySelector('header');
+        this.NaviGationBar = root.querySelector('footer');
         return this;
     }
-    public createColorPattel(){
+    public createColorPattel() {
         var colorPalett = document.createElement('div');
 
-            colorPalett.setAttribute('id' , this.paletteID );
+        colorPalett.setAttribute('id', this.palletID);
 
-            colorPalett.innerHTML = this.createColorCells();
-                
+        colorPalett.innerHTML = this.createColorCells();
+
         return colorPalett;
     }
     public createColorCells() {
@@ -180,28 +187,20 @@ class colorJs {
         var colorList = this.setColors();
 
         var htmlStringCollect = '';
-        
-        colorList.forEach ( parentColor => {
+
+        colorList.forEach(parentColor => {
             var htmlString = "<div class='cJRow'>";
             var cos = Object.keys(parentColor);
 
-                cos.forEach(color => {
-                    htmlString += "<div class='cJCell' data-name='" + color + "' style='background: " + parentColor[color] + "'></div>";
-                });
+            cos.forEach(color => {
+                htmlString += "<div class='cJCell' data-name='" + color + "' style='background: " + parentColor[color] + "'></div>";
+            });
 
             htmlString += "</div>";
             htmlStringCollect += htmlString;
         });
 
         return htmlStringCollect;
-    }
-    public createFooterMsg() {
-        var footer = document.createElement('footer');
-
-        footer.innerHTML = '<p> do it faster ! </p>'
-
-        return footer;
-
     }
     public appedAfter(elem: Node, appenThis: Node) {
 
