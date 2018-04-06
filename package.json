@@ -1,25 +1,25 @@
 {
-  "name": "open-seed",
+  "name": "colors-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple Color Pallet right in your broser page  . to change and preview element colors . just include the sctipt in your page and done !",
   "main": "index.js",
   "directories": {
     "test": "karma start",
     "postinstall": "gulp all"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/insetavijit/open-seed-js.git"
+    "url": "git+https://github.com/insetavijit/colors-js.git"
   },
-  "author": "",
+  "author": "inset.avijit",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/insetavijit/open-seed-js/issues"
+    "url": "https://github.com/insetavijit/colors-js/issues"
   },
-  "homepage": "https://github.com/insetavijit/open-seed-js#readme",
+  "homepage": "https://github.com/insetavijit/colors-js#readme",
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
     "@types/jquery": "^3.3.1",
